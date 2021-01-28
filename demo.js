@@ -1,4 +1,6 @@
 
+  var chart = anychart.scatter();
+  var numOfChart = 0;
 
 
 function main(param) {
@@ -57,7 +59,6 @@ function main(param) {
       });
   }
 
-  var chart = anychart.scatter();
 
   var chartSeries1 = chart.marker(series1.data);
   var chartSeries2 = chart.marker(series2.data);
@@ -71,6 +72,17 @@ function main(param) {
 
   chart.title(chartTitle);
   chart.container("container");
-  chart.draw();
+  if(numOfChart === 0)
+  {
+    chart.draw();
+    numOfChart++;
+  }
+  else
+  {
+    chart.removeAllSeries();
+    chart.draw();
+    numOfChart = 0;
+  }
+
 
 }
