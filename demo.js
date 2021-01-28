@@ -13,7 +13,6 @@ function main(param) {
   var testArray = Array.isArray(xData);
   var arr1 = xData[0];
 
-  document.querySelector("h2").innerHTML = "<h2>"+xData.length+"</h2>";
 
   var yTitle = fmJson["y Title"];
   var ySeries1Title = fmJson["y series 1 title"];
@@ -23,7 +22,6 @@ function main(param) {
   var ySeries2Data = fmJson["y series 2 data"]; // array
   var ySeries3Data = fmJson["y series 3 data"]; //array
 
-  jsonObj = [];
   var series1 = {
     data: []
   };
@@ -36,24 +34,9 @@ function main(param) {
     data: []
   };
 
-  /* testing */
-  var testString = "";
-  for(var i = 0; (i < xData.length) && (i < ySeries1Data.length); i++)
-  {
-    document.querySelector("h3").innerText = "<h2>"+"in the loop"+"</h2>";
-    testString = testString+xData[i].toString()+" ";
-  }
-  testString = "<p>" + testString + "</p>";
-
-  document.querySelector("h1").innerHTML = testString;
 
   for(var i = 0; i < xData.length && i < ySeries1Data.length; i++)
   {
-    item = {};
-    item ["x"] = xData[i];
-    item ["value"] = ySeries1Data[i];
-
-    jsonObj.push(item);
       series1.data.push({
         x: xData[i],
         value: ySeries1Data[i]
@@ -77,6 +60,8 @@ function main(param) {
   var chart = anychart.scatter();
 
   var chartSeries1 = chart.marker(series1.data);
+  var chartSeries2 = chart.marker(series2.data);
+  var chartSeries3 = chart.marker(series3.data);
 
   chart.xGrid(true);
   chart.yGrid(true);
