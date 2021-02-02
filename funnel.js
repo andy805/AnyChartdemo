@@ -1,15 +1,15 @@
 
-var param = {
-  "chart title": "test 1",
-  "x data": ["test 1.1", "test 1.2", "test 1.3"],
-  "y series 1 data": [100000, 1000, 10]
-}
-
-param = JSON.stringify(param);
+// var param = {
+//   "chart title": "test 1",
+//   "x data": ["test 1.1", "test 1.2", "test 1.3"],
+//   "y series 1 data": [100000, 1000, 10]
+// }
+//
+// param = JSON.stringify(param);
 
 var funnelChart = anychart.funnel();
 
-// function main(param) {
+function main(param) {
   let fmJson = JSON.parse(param);
 
   var chartTitle = fmJson["chart title"];
@@ -32,4 +32,4 @@ var funnelChart = anychart.funnel();
   funnelChart.container("container");
   funnelChart.draw();
 
-// }
+}
