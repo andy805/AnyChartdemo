@@ -9,10 +9,14 @@ var counter = 0;
 //   "x data": [10, 20, 30, 25],
 //   "y series 1 data": [100, 200, 300, 150],
 //   "y series 2 data": [200, 300, 400, 550],
-//   "y series 3 data": [300, 400, 500, 750]
+//   "y series 3 data": [300, 400, 500, 750],
+//   "y series 1 title": "test1",
+//   "y series 2 title": "test2",
+//   "y series 3 title": "test3",
+//   "z angle": 10
 // }
-//
-// param = JSON.stringify(param);
+
+param = JSON.stringify(param);
 
 
 function main(param) {
@@ -20,8 +24,10 @@ function main(param) {
 
   var chartTitle = fmJson["chart title"];
   var xData = fmJson["x data"]; //aray
-  var yTitle = fmJson["y Title"];
+  var xTitle = fmJson["x title"];
+  var yTitle = fmJson["y title"];
   var ySeries1Title = fmJson["y series 1 title"];
+
   var ySeries2Title = fmJson["y series 2 title"];
   var ySeries3Title = fmJson["y series 3 title"];
   var ySeries1Data = fmJson["y series 1 data"]; // array
@@ -61,16 +67,18 @@ function main(param) {
   // chart.labels().format("{%x}: {%yPercentOfTotal}%");
   chart.title(chartTitle);
   chart.container("container");
-  chart.zAngle(zAngle.parseInt(zAngle, 10));
+  chart.zAngle(zAngle);
   chart.zAspect("150%");
   chart.legend(true);
+  chart.xAxis().title(xTitle);
+  chart.yAxis().title(yTitle);
   if(counter === 0){
     var series1 = chart.line(series1ForChart);
     var series2 = chart.line(series2ForChart);
     var series3 = chart.line(series3ForChart);
-    // series1.name(ySeries1Title);
-    // series2.name(ySeries2Title);
-    // series3.name(ySeries3Title);
+    series1.name(ySeries1Title);
+    series2.name(ySeries2Title);
+    series3.name(ySeries3Title);
     chart.draw();
     counter++;
   }
@@ -79,9 +87,9 @@ function main(param) {
     var series1 = chart.line(series1ForChart);
     var series2 = chart.line(series2ForChart);
     var series3 = chart.line(series3ForChart);
-    // series1.name(ySeries1Title);
-    // series2.name(ySeries2Title);
-    // series3.name(ySeries3Title);
+    series1.name(ySeries1Title);
+    series2.name(ySeries2Title);
+    series3.name(ySeries3Title);
     chart.draw();
 
   }
