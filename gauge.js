@@ -1,77 +1,79 @@
-var chart = anychart.gauge.linear();
+var chart = anychart.gauges.linear();
+var marker = chart.marker()
+//chart.addPointer(0)
+var counter = 0;
+// var param = {
+//   "chart title": "test 1",
+//   "max": 1000,
+//   "upper mid": 750,
+//   "middle": 500,
+//   "lower mid": 250,
+//   "bottom": 0,
+//   "marker": 500
+// }
+
+param = JSON.stringify(param);
 
 
 function main(param) {
   let fmJson = JSON.parse(param);
 
   var chartTitle = fmJson["chart title"];
-  var xData = fmJson["x data"]; //aray
-  var xTitle = fmJson["x title"];
-  var yTitle = fmJson["y title"];
-  var ySeries1Title = fmJson["y series 1 title"];
-  var ySeries1Data = fmJson["y series 1 data"]; // array
+  var max = fmJson["max"]; //aray
+  // console.log("top:"+max);
+  var upperMid = fmJson["upper mid"];
+  // console.log("upper mid:"+upperMid);
+  var middle = fmJson["middle"]
+  // console.log("mid:"+middle);
+  var lowerMid = fmJson["lower mid"];
+  // console.log("lower mid:"+lowerMid);
+  var bottom = fmJson["bottom"];
+  // console.log("bottom:"+bottom);
+  var markerPos = fmJson["marker"];
   var scaleBarColorScale = anychart.scales.ordinalColor().ranges(
     [{
-        from: 0,
-        to: 25,
+        from: bottom,
+        to: lowerMid,
         color: ['#D81E05', '#EB7A02']
       },
       {
-        from: 25,
-        to: 50,
+        from: lowerMid,
+        to: middle,
         color: ['#EB7A02', '#FFD700']
       },
       {
-        from: 50,
-        to: 75,
+        from: middle,
+        to: upperMid,
         color: ['#FFD700', '#CAD70b']
       },
       {
-        from: 75,
-        to: 100,
+        from: upperMid,
+        to: max,
         color: ['#CAD70b', '#2AD62A']
       }
     ]
   );
 
+  marker.data([markerPos]);
+  marker.dataIndex(0)
+  marker.offset("11%");
+  marker.type('triangle-left');
+  marker.zIndex(10);
+  marker.width(3);
   // create a Scale Bar
-  var scaleBar = gauge.scaleBar(0);
+  var myScaleBar = chart.scaleBar(0);
+  myScaleBar.colorScale(scaleBarColorScale);
+  chart.scale({minimum: bottom, maximum: max});
+  // chart.scaleBar(true);
 
-  var series1ForChart = [];
-
-  for (var i = 0; i < xData.length && i < ySeries1Data.length; i++) {
-    series1ForChart.push({
-      x: xData[i],
-      value: ySeries1Data[i]
-    });
-  }
-
-
-  // chart.labels().format("{%x}: {%yPercentOfTotal}%");
-  chart.title(chartTitle);
   chart.container("container");
-  chart.legend(true);
-  chart.xAxis().title(xTitle);
-  chart.yAxis().title(yTitle);
+  chart.title(chartTitle);
   if (counter === 0) {
-    var series1 = chart.line(series1ForChart);
-    var series2 = chart.line(series2ForChart);
-    var series3 = chart.line(series3ForChart);
-    series1.name(ySeries1Title);
-    series2.name(ySeries2Title);
-    series3.name(ySeries3Title);
     chart.draw();
     counter++;
   } else {
     chart.removeAllSeries();
-    var series1 = chart.line(series1ForChart);
-    var series2 = chart.line(series2ForChart);
-    var series3 = chart.line(series3ForChart);
-    series1.name(ySeries1Title);
-    series2.name(ySeries2Title);
-    series3.name(ySeries3Title);
     chart.draw();
-
   }
 
 }
