@@ -1,35 +1,22 @@
-var chart = anychart.gauges.linear();
-var marker = chart.marker()
-//chart.addPointer(0)
-var counter = 0;
-// var param = {
-//   "chart title": "test 1",
-//   "max": 1000,
-//   "upper mid": 750,
-//   "middle": 500,
-//   "lower mid": 250,
-//   "bottom": 0,
-//   "marker": 500
-// }
+var chart = anychart.gauges.linear(); //create gauge object
+var marker = chart.marker() // create marker object
+var counter = 0; // counter to detect if i already drew a chart
 
-param = JSON.stringify(param);
-
-
+//called from FileMaker
+//input: a Json object - as a string
 function main(param) {
-  let fmJson = JSON.parse(param);
+  let fmJson = JSON.parse(param); //take param which is a string to JS object
 
+  //Assign variable from the json object
   var chartTitle = fmJson["chart title"];
-  var max = fmJson["max"]; //aray
-  // console.log("top:"+max);
+  var max = fmJson["max"];
   var upperMid = fmJson["upper mid"];
-  // console.log("upper mid:"+upperMid);
   var middle = fmJson["middle"]
-  // console.log("mid:"+middle);
   var lowerMid = fmJson["lower mid"];
-  // console.log("lower mid:"+lowerMid);
   var bottom = fmJson["bottom"];
-  // console.log("bottom:"+bottom);
   var markerPos = fmJson["marker"];
+
+  //make the color scale
   var scaleBarColorScale = anychart.scales.ordinalColor().ranges(
     [{
         from: bottom,
@@ -53,25 +40,28 @@ function main(param) {
       }
     ]
   );
-
-  marker.data([markerPos]);
-  marker.dataIndex(0)
-  marker.offset("11%");
-  marker.type('triangle-left');
-  marker.zIndex(10);
-  marker.width(3);
   // create a Scale Bar
   var myScaleBar = chart.scaleBar(0);
-  myScaleBar.colorScale(scaleBarColorScale);
-  chart.scale({minimum: bottom, maximum: max});
-  // chart.scaleBar(true);
+  myScaleBar.colorScale(scaleBarColorScale); //set the color scale
+  chart.scale({minimum: bottom, maximum: max}); //set the min and max of the chart
 
-  chart.container("container");
-  chart.title(chartTitle);
+  marker.data([markerPos]); //set the position of the marker
+  marker.dataIndex(0) //draw the marker
+  marker.offset("11%"); //moves marker to the left of the chart.
+  marker.type('triangle-left'); //shape of the marker
+  marker.zIndex(10); //bring the marker up front
+  marker.width(3); //size of the marker
+
+  chart.container("container"); //set the html element that the chart will be drawn on
+  chart.title(chartTitle); //set the title of the chart
+  //counter will only be zero on the first time main is called.
+  //counter will only be reseted when the web viewer is resetted
   if (counter === 0) {
     chart.draw();
     counter++;
-  } else {
+  }
+  //i have drawn a chart. Delete all data in chart object and give new data and redraw
+  else {
     chart.removeAllSeries();
     chart.draw();
   }

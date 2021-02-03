@@ -1,29 +1,15 @@
 
-var chart = anychart.line3d();
-var counter = 0;
+var chart = anychart.line3d(); //create a line3d object
+var counter = 0; //counter to detect if i already drew a chart
 
-
-
-// var param = {
-//   "chart title": "test 1",
-//   "x data": [10, 20, 30, 25],
-//   "y series 1 data": [100, 200, 300, 150],
-//   "y series 2 data": [200, 300, 400, 550],
-//   "y series 3 data": [300, 400, 500, 750],
-//   "y series 1 title": "test1",
-//   "y series 2 title": "test2",
-//   "y series 3 title": "test3",
-//   "z angle": 10
-// }
-
-param = JSON.stringify(param);
-
-
+//called from FileMaker
+//input: a Json object - as a string
 function main(param) {
-  let fmJson = JSON.parse(param);
+  let fmJson = JSON.parse(param); //take param which is a string to JS object
 
+  //set variables to items contained in the json object
   var chartTitle = fmJson["chart title"];
-  var xData = fmJson["x data"]; //aray
+  var xData = fmJson["x data"]; //array
   var xTitle = fmJson["x title"];
   var yTitle = fmJson["y title"];
   var ySeries1Title = fmJson["y series 1 title"];
@@ -36,10 +22,12 @@ function main(param) {
 
   var zAngle = fmJson["z angle"];
 
+  // arrays to hold objects that will be used to render the chart
   var series1ForChart = [];
   var series2ForChart = [];
   var series3ForChart = [];
 
+  //three for loops to put the data from series 1,2 and 3 into their respected arrays
   for(var i = 0; i < xData.length && i < ySeries1Data.length; i++)
   {
     series1ForChart.push({
@@ -64,26 +52,27 @@ function main(param) {
     });
   }
 
-  // chart.labels().format("{%x}: {%yPercentOfTotal}%");
-  chart.title(chartTitle);
-  chart.container("container");
-  chart.zAngle(zAngle);
+  chart.title(chartTitle); //set the title
+  chart.container("container"); //chosing which html element that the chart will be drawn on
+  chart.zAngle(zAngle); //changed the view of the chart
   chart.zAspect("150%");
-  chart.legend(true);
-  chart.xAxis().title(xTitle);
-  chart.yAxis().title(yTitle);
+  chart.legend(true); //allows for multiple legends
+  chart.xAxis().title(xTitle); //setting the x axis title
+  chart.yAxis().title(yTitle); //setting the y axis title
+
   if(counter === 0){
-    var series1 = chart.line(series1ForChart);
-    var series2 = chart.line(series2ForChart);
-    var series3 = chart.line(series3ForChart);
-    series1.name(ySeries1Title);
+    var series1 = chart.line(series1ForChart); //add series 1 to chart object
+    var series2 = chart.line(series2ForChart); //add series 2 to chart object
+    var series3 = chart.line(series3ForChart); //add series 3 to chart object
+    series1.name(ySeries1Title); //set the name for the series
     series2.name(ySeries2Title);
     series3.name(ySeries3Title);
     chart.draw();
     counter++;
   }
   else {
-    chart.removeAllSeries();
+    chart.removeAllSeries(); //remove all series that are in the chart objects
+    //set new series into the chart object
     var series1 = chart.line(series1ForChart);
     var series2 = chart.line(series2ForChart);
     var series3 = chart.line(series3ForChart);
