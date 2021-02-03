@@ -4,6 +4,20 @@ var counter = 0; //counter to detect if i already drew a chart
 
 //called from FileMaker
 //input: a Json object - as a string
+/*  Json Object
+ *  {
+       chart title: "title",
+       x title: "x title",
+       x data: [num1, num2,...],
+       y title: "y title",
+       y series 1 data: [num1, num2,...],
+       y series 1 title: "title"
+       y series 2 data: [num1, num2,...],
+       y series 2 title: "title"
+       y series 3 data: [num1, num2,...],
+       y series 3 title: "title"
+ }
+ */
 function main(param) {
   let fmJson = JSON.parse(param); //take param which is a string to JS object
 

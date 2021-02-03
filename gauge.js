@@ -4,6 +4,18 @@ var counter = 0; // counter to detect if i already drew a chart
 
 //called from FileMaker
 //input: a Json object - as a string
+/*
+JSON
+{
+	chart title: "chart title",
+	max: number,
+	upper mid: number,
+	middle: number,
+	lower mid: number,
+	bottom: number,
+  marker: number
+}
+*/
 function main(param) {
   let fmJson = JSON.parse(param); //take param which is a string to JS object
 

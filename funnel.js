@@ -5,6 +5,13 @@ var funnelChart = anychart.funnel();
 
 //main function called by fileMaker
 //input: JSON object from fileMaker that has all data needed for funnel chart
+/*
+{
+	chart title: "chart title",
+	x data: ["ex1", "ex2", "ex3",...],
+	y series 1 data: [1, 2, 3, ...]
+}
+*/
 function main(param) {
 
   let fmJson = JSON.parse(param); // turn param which is a string to an object
