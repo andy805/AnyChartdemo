@@ -31,7 +31,7 @@ function main(param) {
   }
 
   funnelChart.data(dataForFunnel); //setting the funnel charts object data
-  funnelChart.labels().format("{%x}: {%yPercentOfTotal}%"); //formating the label
+  funnelChart.labels().format("{%x} - {%Value} - {%yPercentOfTotal}%"); //formating the label
   funnelChart.title(chartTitle); //setting the title of the chart
   funnelChart.container("container"); //chosing where to draw the chart
   funnelChart.draw();
